@@ -1,0 +1,41 @@
+@model VendaModel
+@{
+    ViewBag.Subtitulo = $"Fechamento de Venda <b>{Model.IdVenda:D4}</b>";
+}
+
+<h1 class="text-primary">@Html.Raw(ViewBag.Subtitulo)</h1>
+<hr>
+<h6>Cliente: <b class="text-dark">@Model.Cliente.Nome</b></h6>
+<hr>
+@if (Model.ItensVenda.Count > 0)
+{
+    <h6><b>Itens da venda:</b></h6>
+    <hr>
+    @foreach (var item in Model.ItensVenda)
+    {
+        <h6>@item.Cerveja.Nome (@item.Quantidade x @item.ValorUnitario.ToString("C") = @item.ValorItem.ToString("C"))</h6>
+    }
+    <hr>
+    <h6><b>Valor Total da Venda: @Model.ValorTotal.Value.ToString("C")</b></h6>
+}
+else
+{
+    <h6><b>Não há itens na venda.</b></h6>
+}
+
+<h4>Deseja realmente fechar essa venda?</h4>
+
+<form asp-action="Fechar" class="w-25">
+    <input type="hidden" asp-for="@Model.IdVenda" name="id">
+    <div class="mt-3">
+        @if (!Model.DataVenda.HasValue && Model.ItensVenda.Count() > 0)
+        {
+            <a asp-action="Index" asp-route-cid="@Model.IdCliente" class="btn btn-success">Não</a>
+            <button class="btn btn-danger" type="submit">Sim</button>
+        }
+        else
+        {
+            <a asp-action="Index" asp-route-cid="@Model.IdCliente" class="btn btn-outline-success">Voltar</a>
+        }
+    </div>
+</form>

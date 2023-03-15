@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "Mttechne.Web": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:54306;http://localhost:54307"
+    }
+  }
+}

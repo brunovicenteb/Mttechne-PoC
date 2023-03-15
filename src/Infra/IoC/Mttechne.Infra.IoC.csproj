@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="7.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+	  <ProjectReference Include="..\..\Application\Mttechne.Application.csproj" />
+	  <ProjectReference Include="..\Data\Mttechne.Infra.Data.csproj" />
+	</ItemGroup>
+
+</Project>

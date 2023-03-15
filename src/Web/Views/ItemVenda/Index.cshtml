@@ -1,0 +1,89 @@
+@model IEnumerable<ItemVendaModel>
+@{
+    var venda = ViewBag.Venda as VendaModel;
+    ViewBag.Subtitulo = $"Itens da Venda <b>{venda.IdVenda:D4}</b>";
+}
+
+<header class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="text-primary">
+            @Html.Raw(ViewBag.Subtitulo)
+            @(venda.DataVenda.HasValue ? "(Fechado)" : "")
+        </h1>
+    </div>
+    @if (!venda.DataVenda.HasValue)
+    {
+        <div>
+            <a asp-action="Cadastrar" asp-route-vend="@venda.IdVenda" class="btn btn-primary">Novo Item</a>
+        </div>
+    }
+</header>
+<h5>Cliente: <b>@venda.Cliente.Nome</b></h5>
+<hr>
+
+<partial name="_Mensagem"></partial>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped tabela-itens">
+        <thead>
+            <tr>
+                <th>Produto</th>
+                <th>Valor Unit.</th>
+                <th>Qtde</th>
+                <th>CashBack</th>
+                <th>Total</th>
+                @if (!venda.DataVenda.HasValue)
+                {
+                    <th>Ações</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var itemVenda in Model)
+            {
+                <tr>
+                    <td>@itemVenda.Cerveja.Nome</td>
+                    <td>@itemVenda.ValorUnitario.ToString("C")</td>
+                    <td>@itemVenda.Quantidade</td>
+                    <td>@itemVenda.ValorTotalCachBack.ToString("C")</td>
+                    <td>@itemVenda.ValorItem.ToString("C")</td>
+                    @if (!venda.DataVenda.HasValue)
+                    {
+                        <td>
+                            <a asp-action="Cadastrar" asp-route-vend="@itemVenda.IdVenda" asp-route-cerv="@itemVenda.IdCerveja"
+                    class="btn btn-sm btn-secondary"><i class="bi-pencil" title="Alterar"></i></a>
+                            <a asp-action="Excluir" asp-route-vend="@itemVenda.IdVenda" asp-route-cerv="@itemVenda.IdCerveja"
+                    class="btn btn-sm btn-danger"><i class="bi-trash" title="Excluir"></i></a>
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3" class="text-end"><b>Valor Total da Venda:</b></td>
+                <td><b>@Model.Sum(i => i.ValorItem).ToString("C")</b></td>
+                @if (!venda.DataVenda.HasValue)
+                {
+                    <td></td>
+                }
+            </tr>
+        </tfoot>
+    </table>
+}
+else
+{
+    <p>Não há nenhum item cadastrado para esta venda.</p>
+    <hr>
+}
+
+<div class="d-flex justify-content-end align-items-center gap-2">
+    <a asp-action="Index" asp-controller="Venda" asp-route-cid="@venda.IdCliente"
+        class="btn btn-outline-success">Voltar</a>
+    @if (!venda.DataVenda.HasValue && venda.ItensVenda.Count() > 0)
+    {
+        <a asp-action="Fechar" asp-controller="Venda" asp-route-id="@venda.IdVenda" class="btn btn-success">Fechar
+            Venda</a>
+    }
+</div>

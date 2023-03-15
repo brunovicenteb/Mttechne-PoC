@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="5.0.13" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Mttechne.Application.csproj" />
+    <ProjectReference Include="..\Infra\IoC\Mttechne.Infra.IoC.csproj" />
+  </ItemGroup>
+</Project>

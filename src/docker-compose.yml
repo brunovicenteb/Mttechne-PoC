@@ -1,0 +1,61 @@
+version: '3.4'
+
+services:
+  postgres:
+    container_name: postgres.db
+    restart: always
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=guest      
+      - POSTGRES_PASSWORD=guest
+      - POSTGRES_DB=MttechneDb
+    networks:
+      - mttechne-compose-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  pgadmin:
+    container_name: postgres.admin
+    restart: always  
+    image: dpage/pgadmin4
+    ports:
+      - "8002:80"
+    depends_on:
+      - postgres
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=guest@guest.com
+      - PGADMIN_DEFAULT_PASSWORD=guest
+    networks:
+      - mttechne-compose-network
+    volumes:
+      - postgres_admin_data:/root/.pgadmin
+     
+  mttechne.ui.web:
+    restart: always  
+    container_name: mttechne.ui.web
+    image: ${DOCKER_REGISTRY-}mttechneuiweb
+    ports:
+      - "8001:80"
+    build:
+      context: .  
+      dockerfile: Presentation/Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+      - DATABASE_CONNECTION=Host=postgres;Database=MttechneDb;Port=5432;Username=guest;Password=guest
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    networks:
+      - mttechne-compose-network
+
+volumes:
+  postgres_data:
+  postgres_admin_data:
+
+networks:
+  mttechne-compose-network:
+    driver: bridge

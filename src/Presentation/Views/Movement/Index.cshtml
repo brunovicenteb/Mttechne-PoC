@@ -1,0 +1,50 @@
+@using System.Globalization;
+@using Mttechne.Application.ViewModel;
+@model IEnumerable<MovementViewModel>
+@{
+    ViewBag.Subtitulo = "Daily movement";
+}
+
+<header class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="text-primary">@ViewBag.Subtitulo</h1>
+    </div>
+    <div>
+        <a asp-action="Create" class="btn btn-primary">New movement</a>
+    </div>
+</header>
+<hr>
+
+<partial name="_Message"></partial>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped tabela-produtos">
+        <thead>
+            <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Value</th>
+                <th>Moment</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.MovementType</td>
+                    <td>@item.Description</td>
+                    <td>@item.Value.ToString("C")</td>
+                    <td>@item.CreatedAt.ToString("dd/MM/yyyy hh:mm tt")</td>
+                    <td>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi-trash" title="Delete"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>There are no financial movements.</p>
+}

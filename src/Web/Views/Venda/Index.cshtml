@@ -1,0 +1,70 @@
+@model IEnumerable<VendaModel>
+@{
+    var cliente = ViewBag.Cliente as ClienteModel;
+    ViewBag.Subtitulo = $"Vendas do Cliente <b>{cliente.Nome}</b>";
+}
+
+<header class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="text-primary">@Html.Raw(ViewBag.Subtitulo)</h1>
+    </div>
+    <div>
+        <a asp-action="Cadastrar" asp-route-cid="@cliente.IdUsuario" class="btn btn-primary">Nova Venda</a>
+    </div>
+</header>
+<hr>
+
+<partial name="_Mensagem"></partial>
+
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped tabela-venda">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Data/Hora Venda</th>
+                <th>Valor Total</th>
+                <th>CashBack</th>
+                <th>Data/Hora Entrega</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var venda in Model)
+            {
+                <tr>
+                    <td>@venda.IdVenda.ToString("D4")</td>
+                    <td>@(venda.DataVenda.HasValue ? venda.DataVenda : "Em Aberto")</td>
+                    <td>@venda.ValorTotal.Value.ToString("C")</td>
+                    <td>@venda.CashBack.Value.ToString("C")</td>
+                    <td>@(venda.DataEntrega.HasValue ? venda.DataEntrega : "Não Entregue")</td>
+                    <td>
+                        @if (venda.DataVenda.HasValue)
+                        {
+                            <span class="btn btn-sm btn-light"><i class="bi-check-lg text-gray" title="Venda já fechada"></i></span>
+                            @if (venda.DataEntrega.HasValue)
+                            {
+                                <span class="btn btn-sm btn-light"><i class="bi-truck text-gray" title="Venda já entregue"></i></span>
+                            }
+                            else
+                            {
+                                <a asp-action="Entregar" asp-route-id="@venda.IdVenda" class="btn btn-sm btn-warning"><i class="bi-truck" title="Registrar entrega da venda"></i></a>
+                            }
+                        }
+                        else
+                        {
+                            <a asp-action="Fechar" asp-route-id="@venda.IdVenda" class="btn btn-sm btn-success"><i class="bi-check-lg" title="Fechar venda"></i></a>
+                            <span class="btn btn-sm btn-light"><i class="bi-truck text-gray" title="Feche a venda antes de registrar a entrega"></i></span>
+                        }
+                        <a asp-action="Index" asp-controller="ItemVenda" asp-route-vend="@venda.IdVenda" class="btn btn-sm btn-info"><i class="bi-list-check" title="Itens da venda"></i></a>
+                        <a asp-action="Excluir" asp-route-id="@venda.IdVenda" class="btn btn-sm btn-danger"><i class="bi-trash" title="Excluir venda"></i></a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Não há nenhuma venda cadastrada para este cliente.</p>
+}

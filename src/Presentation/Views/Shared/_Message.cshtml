@@ -1,0 +1,19 @@
+@using Mttechne.UI.Web.Models;
+@if (TempData.ContainsKey("message"))
+{
+    var message = MessageModel.Deserialize(TempData["message"].ToString());
+    @if (message.Type == TypeMessage.Error)
+    {
+        <div class="alert alert-danger mt-3 alert-dismissible fade show" role="alert">
+            @message.Text
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success mt-3 alert-dismissible fade show" role="alert">
+            @message.Text
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+    }
+}
