@@ -2,7 +2,7 @@
 
 This is a proof of concept of an MVC application using clean architecture using .Net Core 7 with Razor Pages.
 
-[![Build-Tests](https://github.com/brunovicenteb/Mttechne-PoC/actions/workflows/Build-Test-Coverage.yml/badge.svg?branch=main)](https://github.com/brunovicenteb/Mttechne-PoC/actions/workflows/Build-Test-Coverage.yml)
+#[![Build-Tests](https://github.com/brunovicenteb/Mttechne-PoC/actions/workflows/Build-Test-Coverage.yml/badge.svg?branch=main)](https://github.com/brunovicenteb/Mttechne-PoC/actions/workflows/Build-Test-Coverage.yml)
 
 <table>
   <tr>
@@ -54,7 +54,7 @@ This is a proof of concept of an MVC application using clean architecture using 
 1. Clone the repository
 
    `
-   git clone https://github.com/brunovicenteb/Microsservices.PoC.git
+   git clone https://github.com/brunovicenteb/Mttechne-PoC.git
    `
 
 2. Open a command line on created directory:
