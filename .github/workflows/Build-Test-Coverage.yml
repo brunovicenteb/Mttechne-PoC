@@ -14,7 +14,7 @@ on:
 
 env:
   TESTS_PROJECT_PATH: ./src/Test
-  PROJECT_PATH: ./src/Test/Mttechne.Test.csprojj
+  PROJECT_PATH: ./src/Test/Mttechne.Test.csproj
 
 jobs:
   Build-Test:
