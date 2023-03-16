@@ -1,0 +1,64 @@
+name: Build-Test-Coverage
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+   inputs:
+      input:
+        description: "Execute tests"
+        required: false
+        default: "Execute tests manually"
+
+env:
+  TESTS_PROJECT_PATH: ./src/Test
+  PROJECT_PATH: ./src/Test/Mttechne.Test.csprojj
+
+jobs:
+  Build-Test:
+    runs-on: ubuntu-latest
+    environment: pipelines
+    strategy:
+      matrix:
+        dotnet-version: ['7.0.x']
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET 7
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: 6.0.x
+        
+    - name: Restore Dependencies
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+      
+    - name: Build
+      run: dotnet build ${{ env.PROJECT_PATH }} --no-restore
+
+    - name: MSTest+Coverlet
+      env:
+        IMDB_API_KEY: ${{ secrets.IMDB_API_KEY }}
+      run: dotnet test ${{ env.TESTS_PROJECT_PATH }} --logger:"html;LogFileName=resultado-testes.html" --collect:"XPlat Code Coverage"
+
+    - name: Install ReportGenerator
+      if: always()
+      run: dotnet tool install --global dotnet-reportgenerator-globaltool --version 4.8.4
+    
+    - name: Generate cover tests reports with ReportGenerator
+      if: success()
+      run: |
+        cd ${{ env.TESTS_PROJECT_PATH }}/TestResults
+        cd $(ls -d */|head -n 1)
+        reportgenerator "-reports:coverage.cobertura.xml" "-targetdir:coveragereport" -reporttypes:Html 
+
+    - name: Upload UnitTest and Cover Reports as Artifacts
+      uses: actions/upload-artifact@v2.2.2
+      env:
+        TESTS_PROJECT_PATH: ${{ env.TESTS_PROJECT_PATH }}/TestResults/
+      if: always()
+      with:
+        name: resultado-testes
+        path: ${{ env.TESTS_PROJECT_PATH }}
+        retention-days: 30
