@@ -6,7 +6,7 @@ namespace Mttechne.Application.Interfaces;
 public interface IMovementAppService
 {
     Task<IEnumerable<MovementViewModel>> GetAllAsync();
-    Task<IEnumerable<MovementViewModel>> GetTodayMovimentationAsync();
+    Task<IEnumerable<MovementViewModel>> GetMovimentationFromDayAsync(DateTime date);
     Task<IEnumerable<MovementTypeViewModel>> GetAllTypesAsync();
     Task<IEnumerable<Tuple<DateTime, decimal, int>>> GetTotalizersAsync();
     Task<MovementViewModel> GetByIdAsync(int id);
