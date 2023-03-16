@@ -1,13 +1,13 @@
 <p align="center">
-  <a href="https://v5.getbootstrap.com/">
-    <img src="https://v5.getbootstrap.com/docs/5.0/assets/brand/bootstrap-logo-shadow.png" alt="Bootstrap logo" width="200" height="165">
+  <a href="https://getbootstrap.com/">
+    <img src="https://getbootstrap.com/docs/5.2/assets/brand/bootstrap-logo-shadow.png" alt="Bootstrap logo" width="200" height="165">
   </a>
 </p>
 
 <h3 align="center">Bootstrap Icons</h3>
 
 <p align="center">
-  Official open source SVG icon library for Bootstrap with over 1,300 icons.
+  Official open source SVG icon library for Bootstrap with over 1,900 icons.
   <br>
   <a href="https://icons.getbootstrap.com/"><strong>Explore Bootstrap Icons »</strong></a>
   <br>
@@ -30,7 +30,13 @@ Bootstrap Icons are packaged up and published to npm. We only include the proces
 npm i bootstrap-icons
 ```
 
-[Also available in Figma.](https://www.figma.com/community/file/972989644486753519/Bootstrap-Icons-v1.5.0)
+For those [using Packagist](https://packagist.org/packages/twbs/bootstrap-icons), you can also install Bootstrap Icons via Composer:
+
+```shell
+composer require twbs/bootstrap-icons
+```
+
+[Also available in Figma.](https://www.figma.com/community/file/1042482994486402696/Bootstrap-Icons)
 
 ## Usage
 
