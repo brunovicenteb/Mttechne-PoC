@@ -31,6 +31,7 @@
                     <td>@item.Item1.ToString("dd/MM/yyyy")</td>
                     <td>@item.Item3</td>
                     <td><strong><span class="@(@item.Item2 >= 0 ? "text-success": "text-danger")">@item.Item2.ToEnglishString()</span></strong></td>
+                    <td><a asp-controller="Movement" asp-route-date="@item.Item1.ToString("MM-dd-yyyy")" class="btn btn-sm btn-primary"><i class="bi bi-search" title="Details"></i></a></td>
                 </tr>
             }
         </tbody>

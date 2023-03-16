@@ -40,9 +40,9 @@ public class MovementAppService : IMovementAppService
         return ConvertToModel(entities);
     }
 
-    public async Task<IEnumerable<MovementViewModel>> GetTodayMovimentationAsync()
+    public async Task<IEnumerable<MovementViewModel>> GetMovimentationFromDayAsync(DateTime date)
     {
-        var entities = await _repository.GetTodayMovimentationAsync();
+        var entities = await _repository.GetMovimentationFromDayAsync(date);
         return ConvertToModel(entities);
     }
 

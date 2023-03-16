@@ -35,13 +35,12 @@ public class MovementRepository : RelationalDbRepository<MttechneContext, Moveme
             .Include(o => o.MovementType)
             .ToListAsync();
 
-    public async Task<IEnumerable<Movement>> GetTodayMovimentationAsync()
+    public async Task<IEnumerable<Movement>> GetMovimentationFromDayAsync(DateTime date)
     {
-        var today = DateTime.Today.Date;
         return await Collection
-                    .Where(b => !b.DeletedAt.HasValue && (b.CreatedAt.Value.Year == today.Year
-                                                      && b.CreatedAt.Value.Month == today.Month
-                                                      && b.CreatedAt.Value.Day == today.Day))
+                    .Where(b => !b.DeletedAt.HasValue && (b.CreatedAt.Value.Year == date.Year
+                                                      && b.CreatedAt.Value.Month == date.Month
+                                                      && b.CreatedAt.Value.Day == date.Day))
                     .OrderByDescending(o => o.CreatedAt)
                     .AsNoTracking()
                     .Include(o => o.MovementType)

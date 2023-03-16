@@ -7,7 +7,7 @@ public interface IMovementRepository : IBaseRepository<Movement>
 {
     Task<IEnumerable<MovementType>> GetAllTypesAsync();
 
-    Task<IEnumerable<Movement>> GetTodayMovimentationAsync();
+    Task<IEnumerable<Movement>> GetMovimentationFromDayAsync(DateTime date);
 
     Task<IEnumerable<Tuple<DateTime, decimal, int>>> GetTotalizersAsync();
 }

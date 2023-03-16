@@ -8,18 +8,22 @@ using System.Collections.Generic;
 using Mttechne.Application.ViewModel;
 using Mttechne.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Mttechne.Toolkit;
+using System.Globalization;
 
 namespace Mttechne.UI.Web.Controllers;
 
 public class MovementController : Controller
 {
     private const string _RibbonElement = "message";
+    private const string _DefaultNewType = "Credit";
+    private const string _DateFormat = "MM-dd-yyyy";
     private const string _MovementNotFound = "Movement not found.";
     private const string _MovementNotDelete = "Could not delete movement from database.";
     private const string _MovementNotInformed = "Movement not informed.";
     private const string _MovementSaved = "Movement saved successfully.";
     private const string _MovementRemoved = "Movement removed successfully.";
-    private const string _DefaultNewType = "Credit";
+    private const string _InformedDateInvalid = "The informed date are not valid. You was redirect to today movimentation.";
 
     public MovementController(IMovementAppService service)
     {
@@ -35,9 +39,22 @@ public class MovementController : Controller
         => TempData[_RibbonElement] = MessageModel.Serialize(message, typeMesage);
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string date = null)
     {
-        var movements = await _service.GetTodayMovimentationAsync();
+        DateTime concreteDate = DateTime.Now.Date;
+        if (date.IsFilled())
+        {
+            if (DateTime.TryParseExact(date, _DateFormat, null, DateTimeStyles.None, out DateTime result))
+                concreteDate = result;
+            else
+            {
+                AddRibbonError(_InformedDateInvalid);
+                return RedirectToAction(nameof(Index));
+            }
+        }
+        ViewBag.IsToday = concreteDate.Date == DateTime.Now.Date;
+        ViewBag.Subtitle = ViewBag.IsToday ? "Daily movement:" : $"Movement of {concreteDate:MM-dd-yyyy}:";
+        var movements = await _service.GetMovimentationFromDayAsync(concreteDate);
         return View(movements);
     }
 
