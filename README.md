@@ -14,8 +14,8 @@ This is a proof of concept of an MVC application using clean architecture using 
   <tr>
     <td><img align="center" alt="Rafa-Csharp" height="30" width="40" src="https://icongr.am/devicon/dot-net-original.svg?size=40"></td>
     <td>.Net Core</td>
-    <td>8.0</td>
-    <td><a href="https://serilog.net">Serilog</a>, <a href="https://xunit.net/">XUnit</a></td>
+    <td>7.0</td>
+    <td><a href="https://xunit.net/">XUnit</a></td>
   </tr>
   <tr>
     <td><img align="center" alt="Rafa-Csharp" height="30" width="40" src="https://icongr.am/devicon/csharp-original.svg?size=40"></td>
