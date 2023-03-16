@@ -35,9 +35,10 @@ public class Startup
         services.RegisterServices(stringConnection);
     }
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    public void Configure(IApplicationBuilder app)
     {
         app.UseDeveloperExceptionPage();
+        app.UseStatusCodePagesWithRedirects("/Errors/PageNotFound");
         app.UseStaticFiles();
         app.UseRouting();
         app.UseEndpoints(endpoints =>
