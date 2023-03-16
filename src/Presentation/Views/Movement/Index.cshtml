@@ -1,4 +1,4 @@
-@using System.Globalization;
+@using Mttechne.Toolkit;
 @using Mttechne.Application.ViewModel;
 @model IEnumerable<MovementViewModel>
 @{
@@ -7,7 +7,7 @@
 
 <header class="d-flex justify-content-between align-items-center">
     <div>
-        <h1 class="text-primary">@ViewBag.Subtitulo <span class="text-danger">@Model.Sum(o=>o.Value).ToString("C")</span></h1>
+        <h1 class="text-primary">@ViewBag.Subtitulo <span class="text-danger">@Model.Sum(o=>o.Value).ToEnglishString()</span></h1>
     </div>
     <div>
         <a asp-action="Create" class="btn btn-primary">New movement</a>
@@ -34,7 +34,7 @@
                 <tr>
                     <td>@item.MovementType</td>
                     <td>@item.Description</td>
-                    <td>@item.Value.ToString("C")</td>
+                    <td>@item.Value.ToEnglishString()</td>
                     <td>@item.CreatedAt.ToString("dd/MM/yyyy hh:mm tt")</td>
                     <td>
                         <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger"><i class="bi-trash" title="Delete"></i></a>

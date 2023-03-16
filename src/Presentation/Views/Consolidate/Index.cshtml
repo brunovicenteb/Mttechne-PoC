@@ -1,4 +1,4 @@
-@using System.Globalization;
+@using Mttechne.Toolkit;
 @using Mttechne.Application.ViewModel;
 @model IEnumerable<Tuple<DateTime, decimal>>
 @{
@@ -28,7 +28,7 @@
             {
                 <tr>
                     <td>@item.Item1.ToString("dd/MM/yyyy")</td>
-                    <td>@item.Item2.ToString("C")</td>
+                    <td>@item.Item2.ToEnglishString()</td>
                 </tr>
             }
         </tbody>

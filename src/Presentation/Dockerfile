@@ -3,6 +3,7 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS base
 LABEL maintainer 'Senior Architect <Bruno Belchior at brunovicenteb@gmail.com>'
 WORKDIR /app
+ENV DOTNET_RUNNING_IN_CONTAINER=true
 RUN apk add --no-cache --update musl musl-utils musl-locales tzdata
 ENV TZ=America/Sao_Paulo
 RUN cp /usr/share/zoneinfo/America/Sao_Paulo /etc/localtime
