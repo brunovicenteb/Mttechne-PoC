@@ -28,7 +28,7 @@
             {
                 <tr>
                     <td>@item.Item1.ToString("dd/MM/yyyy")</td>
-                    <td>@item.Item2.ToEnglishString()</td>
+                    <td><strong><span class="@(@item.Item2 >= 0 ? "text-success": "text-danger")">@item.Item2.ToEnglishString()</span></strong></td>
                 </tr>
             }
         </tbody>
