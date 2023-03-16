@@ -11,6 +11,7 @@ services:
       - POSTGRES_USER=guest      
       - POSTGRES_PASSWORD=guest
       - POSTGRES_DB=MttechneDb
+      - TZ=America/Sao_Paulo
     networks:
       - mttechne-compose-network
     volumes:
