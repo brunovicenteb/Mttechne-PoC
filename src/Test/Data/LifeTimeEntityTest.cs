@@ -23,9 +23,7 @@ public class LifeTimeEntityTest
     {
         var newBaseEntity = new NewLifeTimeEntityTest();
         Assert.Equal(0, newBaseEntity.Id);
-        Assert.Equal(DateTime.UtcNow.Year, newBaseEntity.CreatedAt.Value.Year);
-        Assert.Equal(DateTime.UtcNow.Month, newBaseEntity.CreatedAt.Value.Month);
-        Assert.Equal(DateTime.UtcNow.Day, newBaseEntity.CreatedAt.Value.Day);
+        Assert.Null(newBaseEntity.CreatedAt);
     }
 
     [Fact]
