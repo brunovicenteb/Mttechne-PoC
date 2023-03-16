@@ -2,12 +2,12 @@
 @using Mttechne.Application.ViewModel;
 @model IEnumerable<MovementViewModel>
 @{
-    ViewBag.Subtitulo = "Daily movement";
+    ViewBag.Subtitulo = "Daily movement:";
 }
 
 <header class="d-flex justify-content-between align-items-center">
     <div>
-        <h1 class="text-primary">@ViewBag.Subtitulo</h1>
+        <h1 class="text-primary">@ViewBag.Subtitulo <span class="text-danger">@Model.Sum(o=>o.Value).ToString("C")</span></h1>
     </div>
     <div>
         <a asp-action="Create" class="btn btn-primary">New movement</a>

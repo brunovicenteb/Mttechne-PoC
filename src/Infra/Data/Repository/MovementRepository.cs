@@ -35,6 +35,28 @@ public class MovementRepository : RelationalDbRepository<MttechneContext, Moveme
             .Include(o => o.MovementType)
             .ToListAsync();
 
+    public async Task<IEnumerable<Movement>> GetTodayMovimentationAsync()
+    {
+        var today = DateTime.Today.Date;
+        return await Collection
+                    .Where(b => !b.DeletedAt.HasValue && (b.CreatedAt.Value.Year == today.Year
+                                                      && b.CreatedAt.Value.Month == today.Month
+                                                      && b.CreatedAt.Value.Day == today.Day))
+                    .OrderByDescending(o => o.CreatedAt)
+                    .AsNoTracking()
+                    .Include(o => o.MovementType)
+                            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<Tuple<DateTime, decimal>>> GetTotalizersAsync()
+    {
+        var resultSet = await GetAllAsync();
+        return resultSet
+            .GroupBy(row => new { row.CreatedAt.Value.Date })
+            .Select(g => new Tuple<DateTime, decimal>(g.Key.Date, g.Sum(o => o.Value)))
+            .OrderByDescending(o => o.Item1);
+    }
+
     public async Task<IEnumerable<MovementType>> GetAllTypesAsync()
         => await Context.MovementTypes
             .OrderByDescending(o => o.Name)

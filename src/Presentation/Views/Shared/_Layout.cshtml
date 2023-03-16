@@ -1,5 +1,4 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
-
 @{
     var currentController = ViewContext.RouteData.Values["controller"].ToString();
     var classMainMenu = currentController == "Home" ? "active" : "";
@@ -31,7 +30,7 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link @classMainMenu" asp-controller="Home" asp-action="Index"><i class="bi bi-shop" title="Home"></i>Home</a>
                     <a class="nav-link @classMovement" asp-controller="Movement" asp-action="Index"><i class="bi bi-cash-coin" title="Movement"></i>Movement</a>
-@*                    <a class="nav-link @classConsolidate" asp-controller="Consolidate" asp-action="Index"><i class="bi bi-cash-coin" title="Consolidate"></i>Consolidate</a>*@
+                    <a class="nav-link @classConsolidate" asp-controller="Consolidate" asp-action="Index"><i class="bi bi-cash-coin" title="Consolidate"></i>Consolidate</a>
                 </div>
             </div>
         </div>

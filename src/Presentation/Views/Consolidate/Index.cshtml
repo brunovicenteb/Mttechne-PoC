@@ -1,15 +1,40 @@
+@using System.Globalization;
+@using Mttechne.Application.ViewModel;
+@model IEnumerable<Tuple<DateTime, decimal>>
 @{
     ViewBag.Subtitulo = "Consolidate";
 }
 
+<header class="d-flex justify-content-between align-items-center">
+    <div>
+        <h1 class="text-primary">@ViewBag.Subtitulo</h1>
+    </div>
+</header>
+<hr>
+
 <partial name="_Message"></partial>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h4>
-                Consolidate
-            </h4>
-        </div>
-    </div>
-</div>
+@if (Model.Count() > 0)
+{
+    <table class="table table-striped tabela-produtos">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Balance</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Item1.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Item2.ToString("C")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>There are no financial movements.</p>
+}

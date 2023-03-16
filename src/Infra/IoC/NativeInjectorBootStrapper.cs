@@ -17,7 +17,7 @@ public static class NativeInjectorBootStrapper
         // Infra - Data
         services.AddScoped<IMovementRepository, MovementRepository>();
         services.AddDbContext<MttechneContext>(opt => opt.UseNpgsql(stringConnection));
-        services.AddHostedService(o => new RecreateDbHostedService<MttechneContext>(false, o));
+        services.AddHostedService(o => new RecreateDbHostedService<MttechneContext>(true, o));
         return services;
     }
 }

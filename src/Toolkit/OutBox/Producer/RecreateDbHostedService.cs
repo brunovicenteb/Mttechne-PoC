@@ -4,6 +4,8 @@ using MassTransit.RetryPolicies;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace Mttechne.Toolkit.OutBox.Producer;
 
@@ -32,8 +34,9 @@ public class RecreateDbHostedService<T> : IHostedService where T : DbContext
                 _Context = scope.ServiceProvider.GetRequiredService<T>();
                 if (_ForceRecreate)
                     await _Context.Database.EnsureDeletedAsync(cancellationToken);
-                await _Context.Database.EnsureCreatedAsync(cancellationToken);
-                //await _Context.Database.MigrateAsync();
+                var creator = _Context.Database.GetService<IDatabaseCreator>() as RelationalDatabaseCreator;
+                if (!creator.Exists())
+                    await _Context.Database.EnsureCreatedAsync(cancellationToken);
                 _Logger.Information("Migrations completed for {DbContext}", TypeCache<T>.ShortName);
             }
             catch (Exception ex)

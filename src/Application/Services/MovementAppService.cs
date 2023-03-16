@@ -1,9 +1,8 @@
-﻿using Mttechne.Domain.Interfaces;
-using Mttechne.Application.ViewModel;
-using AutoMapper;
-using Mttechne.Domain.Models;
+﻿using Mttechne.Domain.Models;
 using Mttechne.Toolkit.Mapper;
 using MassTransit.Initializers;
+using Mttechne.Domain.Interfaces;
+using Mttechne.Application.ViewModel;
 
 namespace Mttechne.Application.Interfaces;
 
@@ -16,8 +15,12 @@ public class MovementAppService : IMovementAppService
 
     private readonly IMovementRepository _repository;
 
-    public Task<bool> DeleteAsync(int id)
-        => _repository.DeleteAsync(id);
+    public async Task<bool> DeleteAsync(int id)
+        => await _repository.DeleteAsync(id);
+
+
+    public async Task<IEnumerable<Tuple<DateTime, decimal>>> GetTotalizersAsync()
+        => await _repository.GetTotalizersAsync();
 
     public async Task<MovementViewModel> CreateAsync(MovementViewModel movement)
     {
@@ -33,15 +36,14 @@ public class MovementAppService : IMovementAppService
 
     public async Task<IEnumerable<MovementViewModel>> GetAllAsync()
     {
-        var entity = await _repository.GetAllAsync();
-        var mapper = MapperFactory.Map<Movement, MovementViewModel>();
-        return entity
-            .Select(o =>
-            {
-                var mapped = mapper.Map<Movement, MovementViewModel>(o);
-                mapped.MovementType = o.MovementType.Name;
-                return mapped;
-            });
+        var entities = await _repository.GetAllAsync();
+        return ConvertToModel(entities);
+    }
+
+    public async Task<IEnumerable<MovementViewModel>> GetTodayMovimentationAsync()
+    {
+        var entities = await _repository.GetTodayMovimentationAsync();
+        return ConvertToModel(entities);
     }
 
     public async Task<MovementViewModel> GetByIdAsync(int id)
@@ -59,5 +61,17 @@ public class MovementAppService : IMovementAppService
         var loadedModels = entities
             .Select(o => mapper.Map<MovementType, MovementTypeViewModel>(o));
         return loadedModels;
+    }
+
+    private IEnumerable<MovementViewModel> ConvertToModel(IEnumerable<Movement> movements)
+    {
+        var mapper = MapperFactory.Map<Movement, MovementViewModel>();
+        return movements
+            .Select(o =>
+            {
+                var mapped = mapper.Map<Movement, MovementViewModel>(o);
+                mapped.MovementType = o.MovementType.Name;
+                return mapped;
+            });
     }
 }

@@ -37,7 +37,7 @@ public class MovementController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        var movements = await _service.GetAllAsync();
+        var movements = await _service.GetTodayMovimentationAsync();
         return View(movements);
     }
 

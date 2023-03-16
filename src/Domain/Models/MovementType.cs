@@ -6,6 +6,8 @@ namespace Mttechne.Domain.Models;
 public class MovementType : BaseEntity
 {
     public const int CreditId = 1;
+    public const int DebitId = 2;
+
     public MovementType(int id, string name)
     {
         Id = id;
@@ -20,8 +22,8 @@ public class MovementType : BaseEntity
     public static void Seed(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<MovementType>().HasData(
-            new MovementType { Id = 1, Name = "Credit" },
-            new MovementType { Id = 2, Name = "Debit" }
+            new MovementType { Id = CreditId, Name = "Credit" },
+            new MovementType { Id = DebitId, Name = "Debit" }
             );
     }
 }

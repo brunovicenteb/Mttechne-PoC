@@ -20,6 +20,7 @@ public sealed class MttechneContext : DbContext
         modelBuilder.ApplyConfiguration(new MovementMap());
         modelBuilder.ApplyConfiguration(new MovementTypeMap());
         MovementType.Seed(modelBuilder);
+        Movement.Seed(modelBuilder);
         base.OnModelCreating(modelBuilder);
     }
 }
