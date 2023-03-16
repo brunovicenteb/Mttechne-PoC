@@ -9,5 +9,5 @@ public interface IMovementRepository : IBaseRepository<Movement>
 
     Task<IEnumerable<Movement>> GetTodayMovimentationAsync();
 
-    Task<IEnumerable<Tuple<DateTime, decimal>>> GetTotalizersAsync();
+    Task<IEnumerable<Tuple<DateTime, decimal, int>>> GetTotalizersAsync();
 }

@@ -1,6 +1,6 @@
 @using Mttechne.Toolkit;
 @using Mttechne.Application.ViewModel;
-@model IEnumerable<Tuple<DateTime, decimal>>
+@model IEnumerable<Tuple<DateTime, decimal,int>>
 @{
     ViewBag.Subtitulo = "Consolidate";
 }
@@ -20,6 +20,7 @@
         <thead>
             <tr>
                 <th>Date</th>
+                <th>Ammount movements on day</th>
                 <th>Balance</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
             {
                 <tr>
                     <td>@item.Item1.ToString("dd/MM/yyyy")</td>
+                    <td>@item.Item3</td>
                     <td><strong><span class="@(@item.Item2 >= 0 ? "text-success": "text-danger")">@item.Item2.ToEnglishString()</span></strong></td>
                 </tr>
             }

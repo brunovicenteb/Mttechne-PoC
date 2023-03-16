@@ -19,7 +19,7 @@ public class MovementAppService : IMovementAppService
         => await _repository.DeleteAsync(id);
 
 
-    public async Task<IEnumerable<Tuple<DateTime, decimal>>> GetTotalizersAsync()
+    public async Task<IEnumerable<Tuple<DateTime, decimal, int>>> GetTotalizersAsync()
         => await _repository.GetTotalizersAsync();
 
     public async Task<MovementViewModel> CreateAsync(MovementViewModel movement)

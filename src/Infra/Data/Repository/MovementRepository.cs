@@ -48,12 +48,12 @@ public class MovementRepository : RelationalDbRepository<MttechneContext, Moveme
                             .ToListAsync();
     }
 
-    public async Task<IEnumerable<Tuple<DateTime, decimal>>> GetTotalizersAsync()
+    public async Task<IEnumerable<Tuple<DateTime, decimal, int>>> GetTotalizersAsync()
     {
         var resultSet = await GetAllAsync();
         return resultSet
             .GroupBy(row => new { row.CreatedAt.Value.Date })
-            .Select(g => new Tuple<DateTime, decimal>(g.Key.Date, g.Sum(o => o.Value)))
+            .Select(g => new Tuple<DateTime, decimal, int>(g.Key.Date, g.Sum(o => o.Value), g.Count()))
             .OrderByDescending(o => o.Item1);
     }
 
