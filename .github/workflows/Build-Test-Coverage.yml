@@ -25,7 +25,9 @@ jobs:
       run: |
         echo "LATEST_TAG is ${{env.LATEST_TAG}}"    
         echo "github.ref is ${{ github.ref }}"
-        echo "github.ref_name is ${{ github.ref_name}}"    
+        echo "github.ref_name is ${{ github.ref_name }}"
+        echo "github.event.pull_request.merged is ${{ github.event.pull_request.merged }}"
+        
     
     - name: test
       env:
